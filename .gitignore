@@ -1,0 +1,4 @@
+*.pickle
+.ipynb_checkpoints/
+*.zip
+
