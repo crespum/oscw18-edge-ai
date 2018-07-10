@@ -1,4 +1,6 @@
 *.pickle
 .ipynb_checkpoints/
 *.zip
+model/*
+!model/frozen_model.pb
 
