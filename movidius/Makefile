@@ -91,7 +91,7 @@ freeze: check_tf checkpoint export
 .PHONY: compile
 compile: freeze
 	@echo $(YELLOW)"\nCompiling model to Movidius graph..."$(NOCOLOR)
-	(cd model/$(VERSION); mvNCCompile -s 12 $(MODEL_CKPT)_frozen.pb -in=input -on=$(OUTPUT_NODE_NAME);)
+	(cd model/$(VERSION); mvNCCompile -s 12 $(MODEL_CKPT)_frozen.pb -o $(MODEL_CKPT)_ncgraph -in=input -on=$(OUTPUT_NODE_NAME);)
 	@echo $(YELLOW)"Movidius graph generated! You can run inferences using ncappzoo/apps/image-classifier project.\n"$(NOCOLOR)
 
 .PHONY: profile
@@ -106,10 +106,11 @@ check: freeze
 	(cd model/$(VERSION); mvNCCheck -s 12 $(MODEL_CKPT)_frozen.pb -in=input -on=$(OUTPUT_NODE_NAME);)
 	@echo $(YELLOW)"Movidius graph generated! You can run inferences using ncappzoo/apps/image-classifier project.\n"$(NOCOLOR)
 
-.PHONY: run
-run: compile
-	@echo $(YELLOW)"\nRunning inferences using image-classifier project..."$(NOCOLOR)
-	(python3 image-classifier.py --graph ./model/$(VERSION)/graph --dim $(IMGSIZE) $(IMGSIZE) --mean 127.5 --scale 0.00789 --colormode "RGB" --labels ./model/$(VERSION)/labels.txt --image data/pic_002.jpg)
+INPUT?=data/pic_002.jpg
+.PHONY: infer
+infer:
+	@echo $(YELLOW)"\nRunning inferences on $(INPUT)""..."$(NOCOLOR)
+	(python3 image-classifier.py --graph ./model/$(VERSION)/$(MODEL_CKPT)_ncgraph --dim $(IMGSIZE) $(IMGSIZE) --mean 127.5 --scale 0.00789 --colormode "RGB" --labels ./model/$(VERSION)/labels.txt --image $(INPUT))
 
 .PHONY: help
 help:
@@ -123,6 +124,7 @@ help:
 	@echo "  make compile - Convert the frozen model into Movidius graph file.";
 	@echo "  make check - Compare inference results with that of TensorFlow running on CPU/GPU.";
 	@echo "  make profile - Run the model on NCS and extract complexity, bandwidth and execution time for each layer.";
+	@echo "  make infer - Run a single image classification.";
 
 .PHONY: clean
 clean:
