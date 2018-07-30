@@ -1,21 +1,12 @@
-# Inception
-## On Intel® Movidius™ Neural Compute Stick (NCS)
+# Intel Movidius and Raspberry Pi
 
-<a href="https://research.google.com/pubs/pub43022.html" target="_blank">Inception</a> is a deep convolutional neural network (CNN) architecture designed by Google during the ImageNet Large-Scale Visual Recognition Challenge 2014 (ILSVRC2014). The main goal behind this model is to improve accuracy by increasing depth and width of the network without affecting the computational requirements. However, the latency of inception based models like GoogLeNet, Inception V1, V2, V3 and V4 is much larger than that of MobileNets. You can compare the latency of each of these models by running NCSDK profiler; see below for instructions on how to run the profiler.
+This folder contains the files required to run Inception v(1-4) on the [Intel® Movidius™ Neural Compute Stick](https://www.movidius.com/) on a Raspberry Pi. To generate the files for inference, follow the steps in [Compiling the model](#compiling-the-model). For those of you who just want to run inference on the stick itself, some precompiled files have been uploaded to the `model` directory. If this is the case check the [Running inference](#running-inference) section.
 
-TensorFlow™ provides different versions of pre-trained inception models trained on <a href="http://www.image-net.org/" target="_blank">ImageNet</a>. The Makefile in this project helps convert these <a href="https://github.com/tensorflow/models/tree/master/research/slim#Pretrained" target="_blank">TensorFlow Inception models</a> to a Movidius graph file, which can be deployed on to the Intel® Movidius™ Neural Compute Stick (NCS) for inference.
-
-## Prerequisites
-
-This code example requires that the following components are available:
-1. <a href="https://developer.movidius.com/buy" target="_blank">Movidius Neural Compute Stick</a>
-2. <a href="https://developer.movidius.com/start" target="_blank">Movidius Neural Compute SDK</a>
-3. <a href="https://github.com/tensorflow/tensorflow" target="_blank">TensorFlow source repo</a>
-4. <a href="https://github.com/tensorflow/models" target="_blank">TensorFlow models repo</a>
-
-## Running this example
-
-~~~
+## Compiling the model
+*NOTE: Execute the following instructions on a an x86_64 machine running Ubuntu 16.04 (development machine).*
+1. Follow the [official guide](https://movidius.github.io/ncsdk/install.html) to install **NCSDK v2** on the development machine.
+2. Get the sources:
+```
 mkdir -p ~/workspace/tensorflow
 
 # Clone TensorFlow source and models repo
@@ -23,85 +14,65 @@ cd ~/workspace/tensorflow
 git clone https://github.com/tensorflow/tensorflow
 git clone https://github.com/tensorflow/models
 
-# Clone NC App Zoo
+# Clone this repo
 cd ~/workspace
-git clone https://github.com/movidius/ncappzoo
-
+git clone https://github.com/crespum/oscw18-edge-ai.git
+```
+3. Compile a model:
+```
 # Download, export, freeze and profile model
-cd ~/workspace/ncappzoo/tensorflow/inception/
+cd ~/workspace/oscw18-edge-ai/movidius/
 export TF_SRC_PATH=~/workspace/tensorflow/tensorflow
 export TF_MODELS_PATH=~/workspace/tensorflow/models
+make VERSION=v1 compile
+```
+
+## Running inference
+*NOTE: Execute the following instructions on a Raspberry Pi with an Intel Movidius Neural Compute Stick.*
+
+1. Install NCSDK v2 API. This will not install the entired SDK but just the interface for using the stick.
+```
+# Install dependencies
+sudo apt-get install -y libusb-1.0-0-dev libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler libatlas-base-dev git automake byacc lsb-release cmake libgflags-dev libgoogle-glog-dev liblmdb-dev swig3.0 graphviz libxslt-dev libxml2-dev gfortran python3-dev python-pip python3-pip python3-setuptools python3-markdown python3-pillow python3-yaml python3-pygraphviz python3-h5py python3-nose python3-lxml python3-matplotlib python3-numpy python3-protobuf python3-dateutil python3-skimage python3-scipy python3-six python3-networkx python3-tk
+
+# Compile and install API
+git clone https://github.com/movidius/ncsdk -b ncsdk2
+cd ncsdk/api/src
 make
-~~~
+sudo make install
+```
+2. Clone this repo
+```
+git clone https://github.com/crespum/oscw18-edge-ai.git
+cd oscw18-edge-ai/movidius
+make infer # See available parameters below
+```
+We can use two parameters:
+* `VERSION` to select the Inception version to compile (v1-v4)
+* `INPUT` to select on which we want to run inference. A sample image has been uploade to the repo too.
+We could for instance use `make VERSION=v4 INPUT=foo.jpg`
 
-If `make` ran normally and your computer is able to connect to the NCS device, the output will be similar to this:
+The output should look like this:
+```
+$ make infer
+Running inferences using image-classifier project...
+(python3 image-classifier.py --graph ./model/v1/graph_ncgraph --dim 224 224 --mean 127.5 --scale 0.00789 --colormode "RGB" --labels ./model/v1/labels.txt --image data/pic_002.jpg)
 
-~~~
-Downloading checkpoint files...
-...
-Exporting GraphDef file...
-...
-Freezing model for inference...
-...
-Profiling the model...
-...
-107   InceptionV3/Logits/AvgPool_1a_8x8/AvgPool             0.3   998.1   0.254
-108   InceptionV3/Logits/Conv2d_1c_1x1/BiasAdd              4.1  2080.0   1.883
-109   InceptionV3/Predictions/Softmax                       0.0    18.9   0.202
--------------------------------------------------------------------------------
-                                   Total inference time                  323.57
--------------------------------------------------------------------------------
-Generating Profile Report 'output_report.html'...
-Movidius graph generated! You can run inferences using ncappzoo/apps/image-classifier project.
-~~~
+==============================================================
+Top predictions for pic_002.jpg
+Execution time: 88.5288ms
+--------------------------------------------------------------
+74.7%	288:lynx, catamount
+8.1%	283:tiger cat
+4.8%	282:tabby, tabby cat
+4.1%	284:Persian cat
+1.2%	286:Egyptian cat
+==============================================================
+```
 
-You should also see a newly created `ncappzoo/tensorflow/inception/model` folder.
-
-## Configuring this example
-This example profiles Inception V3 by default, but you can profile other inception versions as well. Below are some example commands:
-
-Inception V1
-~~~
-make VERSION=v1
-~~~
-
-Inception V4
-~~~
-make VERSION=v4
-~~~
-
-### Full list of options
-| Inception versions |
-| --- |
-| VERSION=v1 |
-| VERSION=v2 |
-| VERSION=v3 |
-| VERSION=v4 |
-
-### Compiling and validating the models
-The Makefile only runs NCS <a href="https://movidius.github.io/ncsdk/tools/profile.html" target="_blank">profiler</a> by default, but you can also compile and validate the model using the <a href="https://movidius.github.io/ncsdk/tools/compile.html" target="_blank">compile</a> and <a href="https://movidius.github.io/ncsdk/tools/check.html" target="_blank">check</a> targets. Below are some example commands:
-
-Validate Inception V1 
-~~~
-make check VERSION=v1
-~~~
-
-Compile Inception V2
-~~~
-make compile VERSION=v2
-~~~
-
-> NOTE: NCS profiler generates a Movidius graph file, so if you have already run the profiler on a specific model, there is no reason to run the compiler for the same model.
-
-## Troubleshooting
-
-~~~
-Makefile:31: *** TF_MODELS_PATH is not defined. Run `export TF_MODELS_PATH=path/to/your/tensorflow/models/repo`.  Stop.
-~~~
-* Make sure TF_MODELS_PATH is pointing to your tensorflow models directory.
-
-~~~
-Makefile:46: *** TF_SRC_PATH is not defined. Run `export TF_SRC_PATH=path/to/your/tensorflow/source/repo`.  Stop.
-~~~
-* Make sure TF_SRC_PATH is pointing to your tensorflow source directory.
-
+If you want to use the files compiled in the [previous section](#compiling-the-model) you need to copy these two files from the development machine to the Raspberry Pi (replace the name of the last folder accordingly):
+```
+cd ~/workspace/oscw18-edge-ai/movidius/
+scp model/v1/labels.txt pi@raspberrypi.local:/home/pi/oscw18-edge-ai/movidius/model/v1/
+scp model/v1/labels.txt pi@raspberrypi.local:/home/pi/oscw18-edge-ai/movidius/model/v1/
+```
