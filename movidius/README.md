@@ -1,6 +1,11 @@
 # Intel Movidius and Raspberry Pi
 
-This folder contains the files required to run Inception v(1-4) on the [Intel® Movidius™ Neural Compute Stick](https://www.movidius.com/) on a Raspberry Pi. To generate the files for inference, follow the steps in [Compiling the model](#compiling-the-model). For those of you who just want to run inference on the stick itself, some precompiled files have been uploaded to the `model` directory. If this is the case check the [Running inference](#running-inference) section.
+This folder contains the files required to run Inception v(1-4) on the [Intel® Movidius™ Neural Compute Stick](https://www.movidius.com/) on a Raspberry Pi.
+
+# Setting up the environment
+*Note: The instructions below are heavily based on [this sample app](https://github.com/movidius/ncappzoo/blob/ncsdk2/tensorflow/inception/).*
+
+To generate the files for inference, follow the steps in [Compiling the model](#compiling-the-model). For those of you who just want to run inference on the stick itself, some precompiled files have been uploaded to the `model` directory. If this is the case check the [Running inference](#running-inference) section.
 
 ## Compiling the model
 *NOTE: Execute the following instructions on a an x86_64 machine running Ubuntu 16.04 (development machine).*
@@ -11,7 +16,7 @@ mkdir -p ~/workspace/tensorflow
 
 # Clone TensorFlow source and models repo
 cd ~/workspace/tensorflow
-git clone https://github.com/tensorflow/tensorflow
+git clone https://github.com/tensorflow/tensorflow --branch v1.7.1
 git clone https://github.com/tensorflow/models
 
 # Clone this repo

@@ -1,4 +1,3 @@
-
 VERSION?=v3
 MODEL_CKPT=$(MODEL_NAME)
 
@@ -106,7 +105,7 @@ check: freeze
 	(cd model/$(VERSION); mvNCCheck -s 12 $(MODEL_CKPT)_frozen.pb -in=input -on=$(OUTPUT_NODE_NAME);)
 	@echo $(YELLOW)"Movidius graph generated! You can run inferences using ncappzoo/apps/image-classifier project.\n"$(NOCOLOR)
 
-INPUT?=data/pic_002.jpg
+INPUT?=../data/pic_002.jpg
 .PHONY: infer
 infer:
 	@echo $(YELLOW)"\nRunning inferences on $(INPUT)""..."$(NOCOLOR)
@@ -117,8 +116,8 @@ help:
 	@echo $(YELLOW)"\nPossible make targets: "$(NOCOLOR);
 	@echo "  make help - Shows this message.";
 	@echo "  make all - Builds all dependencies, but does not run this program.";
-	@echo "  make checkpoint - Downloads pre-trained checkpoint files.;"
-	@echo "  make clean - Removes all files created in this project.;"
+	@echo "  make checkpoint - Downloads pre-trained checkpoint files."
+	@echo "  make clean - Removes all files created in this project."
 	@echo "  make export - Export the neural network model for inference.";
 	@echo "  make freeze - Freeze the neural network model for inference.";
 	@echo "  make compile - Convert the frozen model into Movidius graph file.";
