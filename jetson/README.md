@@ -1,0 +1,1 @@
+1. Follow [this setup](https://github.com/NVIDIA-Jetson/tf_to_trt_image_classification#setup) to install the required dependencies.
