@@ -1,0 +1,15 @@
+pi@raspberrypi:~/oscw18-edge-ai/movidius $ make VERSION=v2 infer INPUT=data/pic_002.jpg 
+
+Running inferences on data/pic_002.jpg...
+(python3 image-classifier.py --graph ./model/v2/inception_v2_ncgraph --dim 224 224 --mean 127.5 --scale 0.00789 --colormode "RGB" --labels ./model/v2/labels.txt --image data/pic_002.jpg)
+
+==============================================================
+Top predictions for pic_002.jpg
+Execution time: 119.728ms
+--------------------------------------------------------------
+58.6%   288:lynx, catamount
+16.7%   283:tiger cat
+3.9%    282:tabby, tabby cat
+0.8%    293:tiger, Panthera tigris
+0.5%    286:Egyptian cat
+==============================================================
