@@ -1,0 +1,15 @@
+nvidia@tegra-ubuntu:~/oscw-doc1/jetson$ make infer VERSION=v2
+
+Running inferences on ../data/pic_002.jpg...
+(./build/classify_image/classify_image ../data/pic_002.jpg ./model/v2/inception_v2.plan ./model/v2/labels.txt input InceptionV2/Predictions/Reshape_1 inception)
+Loading TensorRT engine from plan file...
+Preprocessing input...
+Executing inference engine...
+
+The top-5 indices are: 905 620 557 855 670 
+Which corresponds to class labels: 
+0. 905:window screen
+1. 620:lampshade, lamp shade
+2. 557:fire screen, fireguard
+3. 855:theater curtain, theatre curtain
+4. 670:mosquito net

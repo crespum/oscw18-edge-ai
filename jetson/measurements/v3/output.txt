@@ -1,0 +1,15 @@
+nvidia@tegra-ubuntu:~/oscw-doc1/jetson$ make infer VERSION=v3
+
+Running inferences on ../data/pic_002.jpg...
+(./build/classify_image/classify_image ../data/pic_002.jpg ./model/v3/inception_v3.plan ./model/v3/labels.txt input InceptionV3/Predictions/Reshape_1 inception)
+Loading TensorRT engine from plan file...
+Preprocessing input...
+Executing inference engine...
+
+The top-5 indices are: 288 283 282 286 284 
+Which corresponds to class labels: 
+0. 288:lynx, catamount
+1. 283:tiger cat
+2. 282:tabby, tabby cat
+3. 286:Egyptian cat
+4. 284:Persian cat
