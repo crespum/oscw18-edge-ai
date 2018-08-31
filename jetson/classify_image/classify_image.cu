@@ -10,6 +10,7 @@
 #include <NvInfer.h>
 #include <opencv2/opencv.hpp>
 #include "classify_image/utils.h"
+#include <unistd.h>
 
 
 using namespace std;
@@ -132,11 +133,13 @@ int main(int argc, char *argv[])
 
   /* execute engine */
   cout << "Executing inference engine..." << endl;
+  sleep(1); // know distinguish when does the inference start in the scope
   const int kBatchSize = 1;
   context->execute(kBatchSize, bindings);
 
   /* transfer output back to host */
   cudaMemcpy(outputDataHost, outputDataDevice, numOutput * sizeof(float), cudaMemcpyDeviceToHost);
+  sleep(1); // know distinguish when does the inference end in the scope
 
   /* parse output */
   vector<size_t> sortedIndices = argsort(outputDataHost, outputDims);
