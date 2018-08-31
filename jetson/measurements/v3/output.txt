@@ -6,10 +6,9 @@ Loading TensorRT engine from plan file...
 Preprocessing input...
 Executing inference engine...
 
-The top-5 indices are: 288 283 282 286 284 
-Which corresponds to class labels: 
-0. 288:lynx, catamount
-1. 283:tiger cat
-2. 282:tabby, tabby cat
-3. 286:Egyptian cat
-4. 284:Persian cat
+The top-5 indices are: 
+0. 288:lynx, catamount (57.587%)
+1. 283:tiger cat (16.6933%)
+2. 282:tabby, tabby cat (14.0419%)
+3. 286:Egyptian cat (0.963857%)
+4. 284:Persian cat (0.278385%)

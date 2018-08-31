@@ -11,7 +11,7 @@ SoftWare Ver:00.04.04.SP3
 	DSO Vertical System 
 CH1:On
 Scale:0.005000V
-Position:-1.194700V
+Position:-1.204300V
 Coupling:DC
 Bandwidth Limit:OFF
 Probe Ratio:1X
@@ -19,7 +19,7 @@ Unit:V
 
 CH2:On
 Scale:0.005000V
-Position:-1.199700V
+Position:-1.203000V
 Coupling:DC
 Bandwidth Limit:OFF
 Probe Ratio:1X
@@ -44,9 +44,9 @@ Unit:V
 	DSO Horizontal System
 Delay:Off
 Time Mode:YT
-Time Scale:5.000000e-01s
+Time Scale:2.000000e-02s
 Delay Time Scale:5.000000e-07s
-Time Offset:0.000000e+00s
+Time Offset:1.276800e+00s
 Delay Time Offset:0.000000e+00s
 
 	DSO Acquire System
@@ -64,8 +64,8 @@ Trigger Coupling:DC
 Trigger Noise Reject:Off
 Trigger HoldOff:1.600000e-08s
 
-CH1 Level:0.028000V
-CH2 Level:-1.224700V
+CH1 Level:0.522700V
+CH2 Level:-1.228000V
 CH3 Level:0.000000V
 CH4 Level:0.000000V
 
