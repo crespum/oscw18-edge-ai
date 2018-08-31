@@ -141,10 +141,6 @@ int main(int argc, char *argv[])
   /* parse output */
   vector<size_t> sortedIndices = argsort(outputDataHost, outputDims);
 
-  cout << "\nThe top-5 indices are: ";
-  for (int i = 0; i < 5; i++)
-    cout << sortedIndices[i] << " ";
-
   ifstream labelsFile(labelFilename);
 
   if (!labelsFile.is_open())
@@ -160,9 +156,9 @@ int main(int argc, char *argv[])
     labelMap.push_back(label);
   }
 
-  cout << "\nWhich corresponds to class labels: ";
+  cout << "\nThe top-5 indices are: ";
   for (int i = 0; i < 5; i++)
-    cout << endl << i << ". " << labelMap[sortedIndices[i]];
+    cout << endl << i << ". " << labelMap[sortedIndices[i]] << " (" << outputDataHost[sortedIndices[i]] * 100 << "%)";
   cout << endl;
 
   /* clean up */
