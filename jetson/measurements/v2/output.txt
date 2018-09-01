@@ -6,10 +6,9 @@ Loading TensorRT engine from plan file...
 Preprocessing input...
 Executing inference engine...
 
-The top-5 indices are: 905 620 557 855 670 
-Which corresponds to class labels: 
-0. 905:window screen
-1. 620:lampshade, lamp shade
-2. 557:fire screen, fireguard
-3. 855:theater curtain, theatre curtain
-4. 670:mosquito net
+The top-5 indices are: 
+0. 905:window screen (36.9424%)
+1. 620:lampshade, lamp shade (10.8162%)
+2. 557:fire screen, fireguard (8.27163%)
+3. 855:theater curtain, theatre curtain (8.10073%)
+4. 670:mosquito net (3.09301%)

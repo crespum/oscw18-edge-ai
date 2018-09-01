@@ -44,27 +44,27 @@ Unit:V
 	DSO Horizontal System
 Delay:Off
 Time Mode:YT
-Time Scale:5.000000e-01s
+Time Scale:5.000000e-02s
 Delay Time Scale:5.000000e-07s
-Time Offset:0.000000e+00s
+Time Offset:-3.800000e-02s
 Delay Time Offset:0.000000e+00s
 
 	DSO Acquire System
 Acquire Mode:Normal
 Memory Depth:6000000pts
 Average Num:2
-Sampling Rate:1000000Sa/s
+Sampling Rate:5000000Sa/s
 
 	DSO Trigger System
 Trigger Mode:Edge
 Trigger Source:CH1
 Trigger Edge Slope:Falling
-Trigger Sweep:Auto
+Trigger Sweep:Single
 Trigger Coupling:DC
 Trigger Noise Reject:Off
 Trigger HoldOff:1.600000e-08s
 
-CH1 Level:0.028000V
+CH1 Level:1.167200V
 CH2 Level:-1.235800V
 CH3 Level:0.000000V
 CH4 Level:0.000000V
