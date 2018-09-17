@@ -10,19 +10,19 @@ SoftWare Ver:00.04.04.SP3
 
 	DSO Vertical System 
 CH1:On
-Scale:0.010000V
-Position:-1.194800V
+Scale:0.050000V
+Position:-9.395000V
 Coupling:DC
 Bandwidth Limit:OFF
-Probe Ratio:1X
+Probe Ratio:10X
 Unit:V
 
 CH2:On
-Scale:0.010000V
-Position:-1.185800V
+Scale:0.050000V
+Position:-9.464000V
 Coupling:DC
 Bandwidth Limit:OFF
-Probe Ratio:1X
+Probe Ratio:10X
 Unit:V
 
 CH3:Off
@@ -46,26 +46,26 @@ Delay:Off
 Time Mode:YT
 Time Scale:5.000000e-02s
 Delay Time Scale:5.000000e-07s
-Time Offset:-3.800000e-02s
+Time Offset:1.107000e+00s
 Delay Time Offset:0.000000e+00s
 
 	DSO Acquire System
 Acquire Mode:Normal
 Memory Depth:6000000pts
 Average Num:2
-Sampling Rate:5000000Sa/s
+Sampling Rate:500000Sa/s
 
 	DSO Trigger System
 Trigger Mode:Edge
 Trigger Source:CH1
 Trigger Edge Slope:Falling
-Trigger Sweep:Single
+Trigger Sweep:Auto
 Trigger Coupling:DC
 Trigger Noise Reject:Off
 Trigger HoldOff:1.600000e-08s
 
-CH1 Level:1.176200V
-CH2 Level:-1.235800V
+CH1 Level:4.946000V
+CH2 Level:-9.714000V
 CH3 Level:0.000000V
 CH4 Level:0.000000V
 
@@ -77,7 +77,7 @@ Slope Condition:Positive More
 Slope High Time:0.000002s
 Slope Low Time:0.000001s
 Slope Win:Win Up
-Slope Level1:0.020000V
+Slope Level1:0.100000V
 Slope Level2:0.000000V
 
 Video Polarity:Positive
