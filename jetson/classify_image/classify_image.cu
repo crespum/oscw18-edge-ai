@@ -131,12 +131,23 @@ int main(int argc, char *argv[])
   bindings[inputBindingIndex] = (void*) inputDataDevice;
   bindings[outputBindingIndex] = (void*) outputDataDevice;
 
-  /* execute engine */
-  cout << "Executing inference engine..." << endl;
-  sleep(1); // know distinguish when does the inference start in the scope
-  const int kBatchSize = 1;
-  context->execute(kBatchSize, bindings);
+  cudaEvent_t start, stop;
+  cudaEventCreate(&start);
+  cudaEventCreate(&stop);
 
+  /* execute engine */
+  sleep(1); // know distinguish when does the inference start in the scope
+  cout << "Executing inference engine..." << endl;
+  const int kBatchSize = 1;
+  cudaEventRecord(start);
+  context->execute(kBatchSize, bindings);
+  cudaEventRecord(stop);
+
+  cudaEventSynchronize(stop);
+  float milliseconds = 0;
+  cudaEventElapsedTime(&milliseconds, start, stop);
+  cout << "Execution time: " << milliseconds << " ms" << endl;
+  
   /* transfer output back to host */
   cudaMemcpy(outputDataHost, outputDataDevice, numOutput * sizeof(float), cudaMemcpyDeviceToHost);
   sleep(1); // know distinguish when does the inference end in the scope
